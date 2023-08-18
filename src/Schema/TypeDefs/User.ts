@@ -1,7 +1,7 @@
 import {GraphQLObjectType,GraphQLID,GraphQLString, GraphQLList} from 'graphql'
-import { PostType } from './Post';
-import { Posts } from '../../Entities/Posts';
 import {Request,Response, NextFunction, } from 'express';
+import { ActivityType } from './Activity';
+import { Activities } from '../../Entities/Activities';
 
 export const UserType = new GraphQLObjectType({
     name:"User",
@@ -9,15 +9,15 @@ export const UserType = new GraphQLObjectType({
         usr_id:{type:GraphQLID},
         usr_first_name:{type:GraphQLString},
         usr_last_name:{type:GraphQLString},
-        usr_email:{type:GraphQLString},
+        usr_email:{type:GraphQLString}, 
         usr_password:{type:GraphQLString},
-        posts:{
-            type:new GraphQLList(PostType),
-            resolve(parent,args,context){
+        activities:{
+            type:new GraphQLList(ActivityType),
+            resolve(parents,args,context){
                 if(!context.user){
                     throw new Error('Kimlik doğrulama gerekiyor');
                 }
-                return Posts.find({where:{usr_id:parent.usr_id}});
+                return Activities.find({where:{act_id:parents.act_id}})
             }
         }
     })

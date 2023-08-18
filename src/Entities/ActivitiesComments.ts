@@ -1,23 +1,21 @@
 import {BaseEntity,Entity,Column,PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm'
 import { Users } from './Users';
-import { Posts } from './Posts';
+import { Activities } from './Activities';
 @Entity()
-export class Comments extends BaseEntity{
+export class ActivitiesComments extends BaseEntity{
     @PrimaryGeneratedColumn()
     cmt_id!:number;
     @Column()
     cmt_description!:string;
     @Column()
-    cmt_type!:number;
-    @Column()
     usr_id!:number;
     @Column()
-    pst_id!:number;
-    @ManyToOne(() => Users, user => user.comments)
+    act_id!:number;
+    @ManyToOne(() => Users, user => user.activitycomments)
     @JoinColumn({ name: 'usr_id' })
     user:Users;
-    @ManyToOne(() => Posts, post => post.comments)
-    @JoinColumn({ name: 'pst_id' })
-    post:Posts;
+    @ManyToOne(() => Activities, activity => activity.activityComments)
+    @JoinColumn({ name: 'act_id' })
+    activity: Activities;
 
 }

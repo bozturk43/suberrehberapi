@@ -30,18 +30,16 @@ export const GET_USER_BY_ID = {
     type: LoginReturnType, // Token dönecek
     args: {
         usr_email: { type: new GraphQLNonNull(GraphQLString) },
+        usr_password :{ type: new GraphQLNonNull(GraphQLString)}
     },
     async resolve(parent: any, args: any) {
-        const { usr_email } = args;
-
-        // E-posta ile kullanıcıyı bulun
+        const { usr_email,usr_password } = args;
         const user = await Users.findOne({ where: { usr_email } });
-        // Kullanıcı kimliği ve diğer bilgileri içeren bir JWT oluşturun
-        if(user){
+        if(user && user.usr_password === usr_password){
           const token = jwt.sign(
             { userId: user.usr_id, usr_email: user.usr_email },
             JWT_SECRET,
-            { expiresIn: '2h' } // Tokenın süresini belirtin (örneğin, 2 saat)
+            { expiresIn: '12h' } // Tokenın süresini belirtin (örneğin, 2 saat)
         );
             const result = {
               user,token
@@ -49,7 +47,7 @@ export const GET_USER_BY_ID = {
         return result;
         }
         else{
-          return "User Not Found"
+          return "E Mail ya da Şifre Hatalı"
         }
     },
 };

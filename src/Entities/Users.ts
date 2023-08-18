@@ -1,6 +1,6 @@
-import {BaseEntity,Entity,Column,PrimaryGeneratedColumn, OneToMany} from 'typeorm'
-import { Posts } from './Posts';
-import { Comments } from './Comments';
+import {BaseEntity,Entity,Column,PrimaryGeneratedColumn, OneToMany,ManyToMany,JoinTable} from 'typeorm'
+import { ActivitiesComments } from './ActivitiesComments';
+import { Activities } from './Activities';
 
 
 @Entity()
@@ -15,9 +15,10 @@ export class Users extends BaseEntity{
     usr_email!:string;
     @Column()
     usr_password!:string;
-    @OneToMany(() => Posts, post => post.user)
-    posts: Posts[];
-    @OneToMany(()=>Comments,comment=>comment.user)
-    comments:Comments[];
+    @ManyToMany(() => Activities, activity => activity.users)
+    @JoinTable()
+    activities: Activities[];
+    @OneToMany(()=>ActivitiesComments,activitycomment=>activitycomment.user)
+    activitycomments:ActivitiesComments[];
 
 }

@@ -4,9 +4,10 @@ import cors from 'cors';
 import { createConnection } from 'typeorm';
 import { schema,authSchema } from './Schema';
 import {Users} from './Entities/Users'
-import { Posts } from './Entities/Posts';
-import { Comments } from './Entities/Comments';
+import { ActivitiesComments } from './Entities/ActivitiesComments';
 import {authenticate} from './Middleware/Middleware'
+import { Activities } from './Entities/Activities';
+import { ActivitiesImages } from './Entities/ActivitiesImages';
 const main = async ()=>{
     await createConnection({
         type:"mysql",
@@ -16,8 +17,8 @@ const main = async ()=>{
         username:"root",
         password:"01081992",
         logging:true,
-        synchronize:false,
-        entities:[Users,Posts,Comments]
+        synchronize:true,
+        entities:[Users,Activities,ActivitiesComments,ActivitiesImages]
 
     });
     const app = express()

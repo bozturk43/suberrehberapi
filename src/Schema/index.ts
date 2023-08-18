@@ -1,6 +1,6 @@
 import {GraphQLSchema,GraphQLObjectType} from 'graphql';
 import {GET_ALL_USERS, GET_USER_BY_ID,LOGIN_USER} from './Queries/User';
-import {GET_ALL_POSTS} from './Queries/Post';
+import { GET_ALL_ACTIVITIES } from './Queries/Activity';
 import {CREATE_USER} from './Mutations/User';
 
 const RootQuery = new GraphQLObjectType({
@@ -8,7 +8,7 @@ const RootQuery = new GraphQLObjectType({
     fields:{
         getAllUsers:GET_ALL_USERS,
         getUserByUserId:GET_USER_BY_ID,
-        getAllPosts:GET_ALL_POSTS,
+        getAllActivities:GET_ALL_ACTIVITIES,
         userLogin:LOGIN_USER
     }
 });
