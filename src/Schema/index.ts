@@ -1,7 +1,7 @@
 import {GraphQLSchema,GraphQLObjectType} from 'graphql';
-import {GET_ALL_USERS, GET_USER_BY_ID,LOGIN_USER} from './Queries/User';
+import {GET_ALL_USERS, GET_USER_BY_ID} from './Queries/User';
 import { GET_ALL_ACTIVITIES } from './Queries/Activity';
-import {CREATE_USER} from './Mutations/User';
+import {CREATE_USER,LOGIN_USER} from './Mutations/User';
 
 const RootQuery = new GraphQLObjectType({
     name:"RootQuery",
@@ -9,7 +9,6 @@ const RootQuery = new GraphQLObjectType({
         getAllUsers:GET_ALL_USERS,
         getUserByUserId:GET_USER_BY_ID,
         getAllActivities:GET_ALL_ACTIVITIES,
-        userLogin:LOGIN_USER
     }
 });
 const RootMutation = new GraphQLObjectType({
@@ -21,14 +20,15 @@ const RootMutation = new GraphQLObjectType({
 const AuthQueries = new GraphQLObjectType({
     name:"AuthQueries",
     fields:{
-        userLogin:LOGIN_USER
+        getUserByUserId:GET_USER_BY_ID,
     }
 });
 
 const AuthMutation = new GraphQLObjectType({
     name:"AuthMutation",
     fields:{
-        createUser:CREATE_USER
+        createUser:CREATE_USER,
+        userLogin:LOGIN_USER
     }
 });
 export const schema = new GraphQLSchema({
