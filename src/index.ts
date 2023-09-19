@@ -8,6 +8,8 @@ import { ActivitiesComments } from './Entities/ActivitiesComments';
 import {authenticate} from './Middleware/Middleware'
 import { Activities } from './Entities/Activities';
 import { ActivitiesImages } from './Entities/ActivitiesImages';
+import { Places } from './Entities/Places';
+import { PlaceTags } from './Entities/PlaceTags';
 const main = async ()=>{
     await createConnection({
         type:"mysql",
@@ -17,8 +19,8 @@ const main = async ()=>{
         username:"root",
         password:"01081992",
         logging:true,
-        synchronize:true,
-        entities:[Users,Activities,ActivitiesComments,ActivitiesImages]
+        synchronize:false,
+        entities:[Users,Activities,ActivitiesComments,ActivitiesImages,Places,PlaceTags]
 
     });
     const app = express()

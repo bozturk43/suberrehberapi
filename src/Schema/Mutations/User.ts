@@ -19,14 +19,16 @@ export const CREATE_USER ={
         usr_last_name:{type:GraphQLString},
         usr_email:{type:GraphQLString},
         usr_password:{type:GraphQLString},
+        usr_device_id:{type:GraphQLString}
     },
     resolve(parent:any,args:any){
-        const {usr_first_name,usr_last_name,usr_email,usr_password} = args;
+        const {usr_first_name,usr_last_name,usr_email,usr_password,usr_device_id} = args;
         Users.insert({
             usr_first_name,
             usr_last_name,
             usr_email,
-            usr_password
+            usr_password,
+            usr_device_id
         });
         return args;
     }
