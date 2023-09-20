@@ -1,4 +1,4 @@
-import {GraphQLObjectType,GraphQLID,GraphQLString,GraphQLInt, GraphQLNonNull, GraphQLList} from 'graphql'
+import {GraphQLObjectType,GraphQLID,GraphQLString,GraphQLInt, GraphQLNonNull, GraphQLList, GraphQLFloat} from 'graphql'
 import { PlaceTags } from '../../Entities/PlaceTags';
 import { PlaceTagType } from './PlaceTag';
 import { Places } from '../../Entities/Places';
@@ -10,6 +10,8 @@ export const PlaceType:GraphQLObjectType = new GraphQLObjectType({
         plc_google_id:{type:GraphQLString},
         plc_name:{type:GraphQLString},
         plc_description:{type:GraphQLString},
+        plc_longtitude:{type:GraphQLFloat},
+        plc_latitude:{type:GraphQLFloat},
         plc_tags:{
             type:new GraphQLList(PlaceTagType),
             async resolve(parent,args){

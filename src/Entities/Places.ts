@@ -13,6 +13,10 @@ export class Places extends BaseEntity{
     plc_name!:string;
     @Column()
     plc_description!:string;
+    @Column('double')
+    plc_longtitude!:number;
+    @Column('double')
+    plc_latitude!:number;
     @ManyToMany(() => PlaceTags, placeTag => placeTag.places)
     @JoinTable()
     place_tags: PlaceTags[];
