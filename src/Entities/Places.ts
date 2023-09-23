@@ -17,7 +17,7 @@ export class Places extends BaseEntity{
     plc_longtitude!:number;
     @Column('double')
     plc_latitude!:number;
-    @ManyToMany(() => PlaceTags, placeTag => placeTag.places)
+    @ManyToMany(() => PlaceTags)
     @JoinTable()
     place_tags: PlaceTags[];
 }

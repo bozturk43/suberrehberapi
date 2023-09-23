@@ -7,7 +7,6 @@ export class PlaceTags extends BaseEntity{
     @Column()
     plc_tag_name!:string;
     @ManyToMany(() => Places, place => place.place_tags)
-    @JoinTable()
     places: Places[];
 
 }
