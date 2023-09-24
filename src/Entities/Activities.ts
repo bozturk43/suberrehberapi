@@ -6,6 +6,7 @@ OneToMany,ManyToMany,JoinTable} from 'typeorm'
 import { Users } from './Users';
 import {ActivitiesComments} from './ActivitiesComments'
 import { ActivitiesImages } from './ActivitiesImages';
+import { ActivityTags } from './ActivityTags';
 @Entity()
 export class Activities extends BaseEntity{
     @PrimaryGeneratedColumn()
@@ -16,8 +17,10 @@ export class Activities extends BaseEntity{
     act_description!:string;
     @Column()
     act_date!:Date;
-    @Column()
-    act_tags!:string;
+    @Column('double')
+    act_longtitude!:number;
+    @Column('double')
+    act_latitude!:number;
     @OneToMany(() => ActivitiesImages, image => image.activity)
     images: ActivitiesImages[];
     @OneToMany(() => ActivitiesComments, activtyComment => activtyComment.activity)
@@ -25,4 +28,7 @@ export class Activities extends BaseEntity{
     @ManyToMany(() => Users, user => user.activities)
     @JoinTable()
     users: Users[];
+    @ManyToMany(() => ActivityTags)
+    @JoinTable()
+    activity_tags: ActivityTags[];
 }

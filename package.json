@@ -1,6 +1,6 @@
 {
   "name": "suberrehberapi",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "SuberRehber uygulaması icin gelisitirilen api uygumalasi.",
   "main": "index.js",
   "scripts": {
