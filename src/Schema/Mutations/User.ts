@@ -21,16 +21,16 @@ export const CREATE_USER ={
         usr_password:{type:GraphQLString},
         usr_device_id:{type:GraphQLString}
     },
-    resolve(parent:any,args:any){
+    resolve:async(parent:any,args:any)=>{
         const {usr_first_name,usr_last_name,usr_email,usr_password,usr_device_id} = args;
-        Users.insert({
-            usr_first_name,
-            usr_last_name,
-            usr_email,
-            usr_password,
-            usr_device_id
-        });
-        return args;
+        const newUser = new Users();
+        newUser.usr_first_name=usr_first_name;
+        newUser.usr_last_name=usr_last_name;
+        newUser.usr_email=usr_email;
+        newUser.usr_password=usr_password;
+        newUser.usr_device_id=usr_device_id;
+        await newUser.save();
+        return newUser;
     }
 }
 export const LOGIN_USER = {

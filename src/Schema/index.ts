@@ -5,6 +5,8 @@ import {CREATE_USER,LOGIN_USER} from './Mutations/User';
 import { GET_ALL_PLACES, GET_PLACES_BY_LOCATION_DISTANCE, GET_PLACES_BY_TAGS } from './Queries/Place';
 import { CREATE_PLACE } from './Mutations/Place';
 import { CREATE_ACTIVITY } from './Mutations/Activity';
+import { CREATE_PLACE_TAG_CATEGORY } from './Mutations/PlaceTagCategory';
+import { GET_ALL_PLACE_TAG_CATEGORIES, GET_PLACE_TAG_CATEGORY_BY_ID } from './Queries/PlaceTagCategory';
 
 const RootQuery = new GraphQLObjectType({
     name:"RootQuery",
@@ -22,18 +24,19 @@ const RootQuery = new GraphQLObjectType({
 const RootMutation = new GraphQLObjectType({
     name:"Mutation",
     fields:{
-        createUser:CREATE_USER,
         createPlace:CREATE_PLACE,
-        createActivity:CREATE_ACTIVITY
+        createActivity:CREATE_ACTIVITY,
+        createPlaceTagCategory:CREATE_PLACE_TAG_CATEGORY
     }
 });
 const AuthQueries = new GraphQLObjectType({
     name:"AuthQueries",
     fields:{
         getUserByUserId:GET_USER_BY_ID,
+        getAllPlaceTagsCategories:GET_ALL_PLACE_TAG_CATEGORIES,
+        getPlaceTagCategoryById:GET_PLACE_TAG_CATEGORY_BY_ID,
     }
 });
-
 const AuthMutation = new GraphQLObjectType({
     name:"AuthMutation",
     fields:{

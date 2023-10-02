@@ -17,6 +17,10 @@ export class Users extends BaseEntity{
     usr_password!:string;
     @Column()
     usr_device_id!:string;
+    @Column({default:false})
+    usr_is_email_verified:boolean;
+    @Column({default:false})
+    usr_is_active:boolean;
     @ManyToMany(() => Activities, activity => activity.users)
     @JoinTable()
     activities: Activities[];
