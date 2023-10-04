@@ -26,9 +26,9 @@ export class Activities extends BaseEntity{
     @OneToMany(() => ActivitiesComments, activtyComment => activtyComment.activity)
     activityComments: ActivitiesComments[];
     @ManyToMany(() => Users, user => user.activities)
-    @JoinTable()
+    @JoinTable({name:"ACT__USR"})    
     users: Users[];
     @ManyToMany(() => ActivityTags)
-    @JoinTable()
+    @JoinTable({name:"ACT__ACT_TAG"})
     activity_tags: ActivityTags[];
 }

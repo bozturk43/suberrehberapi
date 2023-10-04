@@ -1,7 +1,7 @@
 import {GraphQLSchema,GraphQLObjectType} from 'graphql';
 import {GET_ALL_USERS, GET_USER_BY_ID} from './Queries/User';
 import { GET_ACTIVITIES_BY_LOCATION_DISTANCE, GET_ACTIVITIES_BY_TAGS, GET_ALL_ACTIVITIES } from './Queries/Activity';
-import {CREATE_USER,LOGIN_USER} from './Mutations/User';
+import {CREATE_USER,LOGIN_USER, UPDATE_USER_PREFERENCES} from './Mutations/User';
 import { GET_ALL_PLACES, GET_PLACES_BY_LOCATION_DISTANCE, GET_PLACES_BY_TAGS } from './Queries/Place';
 import { CREATE_PLACE } from './Mutations/Place';
 import { CREATE_ACTIVITY } from './Mutations/Activity';
@@ -18,7 +18,8 @@ const RootQuery = new GraphQLObjectType({
         getPlacesByTag:GET_PLACES_BY_TAGS,
         getPlacesByLocationAndDistance:GET_PLACES_BY_LOCATION_DISTANCE,
         getActivitiesByTags:GET_ACTIVITIES_BY_TAGS,
-        getActivitiesByLocationAndDistance:GET_ACTIVITIES_BY_LOCATION_DISTANCE
+        getActivitiesByLocationAndDistance:GET_ACTIVITIES_BY_LOCATION_DISTANCE,
+        getAllPlaceTagsCategories : GET_ALL_PLACE_TAG_CATEGORIES,
     }
 });
 const RootMutation = new GraphQLObjectType({
@@ -26,7 +27,8 @@ const RootMutation = new GraphQLObjectType({
     fields:{
         createPlace:CREATE_PLACE,
         createActivity:CREATE_ACTIVITY,
-        createPlaceTagCategory:CREATE_PLACE_TAG_CATEGORY
+        createPlaceTagCategory:CREATE_PLACE_TAG_CATEGORY,
+        updateUserPreferences:UPDATE_USER_PREFERENCES
     }
 });
 const AuthQueries = new GraphQLObjectType({

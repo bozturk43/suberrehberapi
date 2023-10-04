@@ -23,7 +23,10 @@ export const GET_USER_BY_ID = {
       id: { type: GraphQLInt },
     },
     resolve(parent:any, args:any) {
-      return Users.findOne({where:{usr_id:args.id}});
+      return Users.findOne({
+        where:{usr_id:args.id},
+        relations: ['usr_pref_plc_tag_cats','usr_pref_plc_tags'],
+      });
     },
   };
   

@@ -12,11 +12,12 @@ import { Places } from './Entities/Places';
 import { PlaceTags } from './Entities/PlaceTags';
 import { ActivityTags } from './Entities/ActivityTags';
 import { PlaceTagsCategories } from './Entities/PlaceTagsCategories';
+import { fetchAndSavePlaces } from './Services/GoogleService';
 const main = async ()=>{
     await createConnection({
         type:"mysql",
         host: "suberrehber.cfk1r0gutwxe.eu-north-1.rds.amazonaws.com",
-        database:"SuberRehber_test",
+        database:"WanderLing_test",
         port:3306,
         username:"root",
         password:"01081992",
@@ -42,6 +43,7 @@ const main = async ()=>{
     app.listen(3001,()=>{
         console.log("SERVER IS RUNNING ON 3001")
     })
+
 }
 
 main().catch((err)=>{
