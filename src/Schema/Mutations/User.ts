@@ -73,9 +73,7 @@ export const UPDATE_USER_PREFERENCES ={
       throw new Error('Kimlik doğrulama gerekiyor');
     }
       const {usr_id,plc_tag_cat_id_list,plc_tag_id_list} = args;
-
       const user:Users | null = await Users.findOne({where:{usr_id:usr_id,}});
-
       //Kategori geldi ise kategori ekle
       if (plc_tag_cat_id_list && plc_tag_cat_id_list.length > 0) {
         const existingCategories = user?.usr_pref_plc_tag_cats || [];
@@ -99,8 +97,8 @@ export const UPDATE_USER_PREFERENCES ={
           if (!existingTags.some((tag) => tag.plc_tag_id === tagId)) {
             const tag = await PlaceTags.findOne({where:{ plc_tag_id: tagId }});
             if (user && tag) {
-              if (!user.usr_pref_plc_tag_cats) {
-                user.usr_pref_plc_tag_cats = []; // Eğer tanımlı değilse, boş bir dizi oluştur
+              if (!user.usr_pref_plc_tags) {
+                user.usr_pref_plc_tags = []; // Eğer tanımlı değilse, boş bir dizi oluştur
               }
               user?.usr_pref_plc_tags.push(tag);
             }

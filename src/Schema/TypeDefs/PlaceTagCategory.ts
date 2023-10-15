@@ -23,7 +23,7 @@ export const PlaceTagCategoryType:GraphQLObjectType = new GraphQLObjectType({
                     where:{plc_tag_cat_id:parent.plc_tag_cat_id},
                     relations:['plc_tags']
                 })
-                return category?.plc_tags;
+                return category?.plc_tags
             },
         },
     })
