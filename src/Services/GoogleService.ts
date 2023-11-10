@@ -1,3 +1,4 @@
+import { PlaceImages } from "../Entities/PlaceImages";
 import { PlaceTags } from "../Entities/PlaceTags";
 import { Places } from "../Entities/Places";
 import axios from 'axios';
@@ -6,7 +7,6 @@ const GOOGLE_PLACES_API_KEY = 'AIzaSyCpOchsSuHzhfXTrk4GAg7HjA6SnsuFxI4';
 
 async function fetchPlaces(location:string, radius:number,type:string ,nextPageToken = null) {
   const baseUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
-  console.log("Typelar",type);
   const params: { [key: string]: any } = {
     location,
     radius,
@@ -50,7 +50,6 @@ export async function fetchAndSavePlaces() {
       await new Promise((resolve) => setTimeout(resolve, 5000)); // 5 saniye bekleme
     } while (nextPageToken);
 }
-
 async function savePlace(plc_google_id:string,plc_name:string,plc_description:string,plc_longtitude:number,plc_latitude:number,plc_tags:string[]){
     const tags = await getTags(plc_tags);
     const isCreated = await isPlaceCreated(plc_google_id);
@@ -92,3 +91,52 @@ async function isPlaceCreated(plcGoogleId:string){
         return false;
     }
 }
+
+export async function getPlacePhotos(plcGoogleId:string){
+  console.log("FOTO FONKS",plcGoogleId);
+  const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?key=${GOOGLE_PLACES_API_KEY}&place_id=${plcGoogleId}`;
+  const placeDetails = await axios.get(placeDetailUrl);
+  const placePhotoReferences = placeDetails.data.result?.photos;
+    if (!placePhotoReferences) {
+      // If photos don't exist, return an empty array
+      console.log("No photos found for", plcGoogleId);
+      return [];
+    }
+    const photoUrls = await Promise.all(
+    placePhotoReferences.map(async (item: any,index:number) => {
+      const photoReferenceUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${item.photo_reference}&key=${GOOGLE_PLACES_API_KEY}`;
+      const response = await axios.get(photoReferenceUrl);
+      console.log(`Foto-${index}`,response.request.res.responseUrl)
+      return response.request.res.responseUrl;
+    })
+  );
+  return photoUrls;
+}
+
+export async function getPlacesandSavePhotos() {
+  const places = await Places.find();
+  for (const place of places) {
+    const existingImages = await PlaceImages.find({where:{place:{plc_id:place.plc_id}}});
+    if (existingImages.length > 0) {
+      console.log(`Bu placein fotografı var ${place.plc_google_id}. Skipping.`);
+      continue; // Skip to the next place
+    }
+    const photos = await getPlacePhotos(place.plc_google_id);
+    console.log("PHOTOS",photos);
+    if (photos && photos.length > 0) {
+      const placeImages = await Promise.all(
+        photos.map(async (item) => {
+          const newPlaceImage = new PlaceImages();
+          newPlaceImage.plc_img_url = item;
+          newPlaceImage.place = place;
+          await newPlaceImage.save();
+          return newPlaceImage;
+        })
+      );
+    }
+  }
+}
+
+
+
+

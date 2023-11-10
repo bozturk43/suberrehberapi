@@ -12,7 +12,8 @@ import { Places } from './Entities/Places';
 import { PlaceTags } from './Entities/PlaceTags';
 import { ActivityTags } from './Entities/ActivityTags';
 import { PlaceTagsCategories } from './Entities/PlaceTagsCategories';
-import { fetchAndSavePlaces } from './Services/GoogleService';
+import { fetchAndSavePlaces, getPlacePhotos, getPlacesandSavePhotos } from './Services/GoogleService';
+import { PlaceImages } from './Entities/PlaceImages';
 const main = async ()=>{
     await createConnection({
         type:"mysql",
@@ -23,7 +24,7 @@ const main = async ()=>{
         password:"01081992",
         logging:true,
         synchronize:false,
-        entities:[Users,Activities,ActivitiesComments,ActivitiesImages,Places,PlaceTags,PlaceTagsCategories,ActivityTags]
+        entities:[Users,Activities,ActivitiesComments,ActivitiesImages,Places,PlaceTags,PlaceTagsCategories,ActivityTags,PlaceImages]
 
     });
     const app = express()
@@ -43,7 +44,6 @@ const main = async ()=>{
     app.listen(3001,()=>{
         console.log("SERVER IS RUNNING ON 3001")
     })
-
 }
 
 main().catch((err)=>{
