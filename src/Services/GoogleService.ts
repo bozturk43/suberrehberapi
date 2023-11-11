@@ -26,7 +26,6 @@ async function fetchPlaces(location:string, radius:number,type:string ,nextPageT
     throw error;
   }
 }
-
 export async function fetchAndSavePlaces() {
     const initialLocation = '41.0082,28.9784'; // İstanbul'un koordinatları
     const types = 'tourist_attraction|park|shopping_mall|mosque|museum|restaurant|cafe|bar|historic_site|art_gallery';
@@ -91,7 +90,6 @@ async function isPlaceCreated(plcGoogleId:string){
         return false;
     }
 }
-
 export async function getPlacePhotos(plcGoogleId:string){
   console.log("FOTO FONKS",plcGoogleId);
   const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?key=${GOOGLE_PLACES_API_KEY}&place_id=${plcGoogleId}`;
@@ -112,7 +110,6 @@ export async function getPlacePhotos(plcGoogleId:string){
   );
   return photoUrls;
 }
-
 export async function getPlacesandSavePhotos() {
   const places = await Places.find();
   for (const place of places) {

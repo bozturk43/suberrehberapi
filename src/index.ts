@@ -12,16 +12,20 @@ import { Places } from './Entities/Places';
 import { PlaceTags } from './Entities/PlaceTags';
 import { ActivityTags } from './Entities/ActivityTags';
 import { PlaceTagsCategories } from './Entities/PlaceTagsCategories';
-import { fetchAndSavePlaces, getPlacePhotos, getPlacesandSavePhotos } from './Services/GoogleService';
 import { PlaceImages } from './Entities/PlaceImages';
+import { sendEmail } from './Services/MailService';
+import * as dotenv from 'dotenv';
+dotenv.config();
+console.log("process env",process.env);
+
 const main = async ()=>{
     await createConnection({
         type:"mysql",
-        host: "suberrehber.cfk1r0gutwxe.eu-north-1.rds.amazonaws.com",
-        database:"WanderLing_test",
-        port:3306,
-        username:"root",
-        password:"01081992",
+        host: process.env.DB_CONFIG_HOST,
+        database:process.env.DB_CONFIG_DATABASE,
+        port:process.env.DB_CONFIG_PORT && parseInt(process.env.DB_CONFIG_PORT) || 0,
+        username:process.env.DB_CONFIG_USERNAME,
+        password:process.env.DB_CONFIG_PASSWORD,
         logging:true,
         synchronize:false,
         entities:[Users,Activities,ActivitiesComments,ActivitiesImages,Places,PlaceTags,PlaceTagsCategories,ActivityTags,PlaceImages]
@@ -44,6 +48,7 @@ const main = async ()=>{
     app.listen(3001,()=>{
         console.log("SERVER IS RUNNING ON 3001")
     })
+
 }
 
 main().catch((err)=>{
